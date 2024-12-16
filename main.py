@@ -19,10 +19,9 @@ def filter_words(letters):
                 safe.append(False)
         if all(safe):
             filtered_words.append(w)
-                    
     return filtered_words
 
-def find_best_word(words):
+def find_best_word(words, max_length):
     letter_value = {
         'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1,
         'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1,
@@ -30,8 +29,7 @@ def find_best_word(words):
     }
     high_score = 0
     high_word = []
-    for w in words:
-        score = 0
+    for w in filter(lambda x: len(x) <= max_length, words):
         score = sum([letter_value[l] for l in w])
         if score > high_score:
             high_score = score
@@ -42,18 +40,21 @@ def find_best_word(words):
 
 def solve(args):
     letters = [l for l in args.letters]
-    output = find_best_word(filter_words(letters))
-    return(output)
-
-
+    output = find_best_word(filter_words(letters), args.length)
+    return output
 
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
+
     gen_parser = subparsers.add_parser("solve")
     gen_parser.add_argument("letters")
+    gen_parser.add_argument("--length", type=int, default=255)
+    gen_parser.set_defaults(func=solve)
+
     args = parser.parse_args()
-    print(solve(args))
+    if hasattr(args, 'func'):
+        print(args.func(args))
 
 if __name__ == "__main__":
     main()
