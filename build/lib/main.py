@@ -5,8 +5,23 @@ def get_words():
     with open('dictionary.csv') as words:
         return [w.strip('\n') for w in words]
 
-def filter_words(letters):
+def filter_words(hand: list[str])-> list[str]:
     words = get_words()
+    hand_letter_occurences = {ch: hand.count(ch) for ch in hand}
+    def check(word: dict[str,int]) -> bool:
+        for word_ch, word_ch_count in word.items():
+            if word_ch not in hand:
+                return False
+            if hand_letter_occurences[word_ch] < word_ch_count:
+                return False
+            if word_ch_count >= 2:
+                return False
+            
+        return True
+
+    word_letter_occurences_list  = [{ch: word.count(ch) for ch in word} for word in words]
+    filtered_words = \
+        [word for word_ch_occurences, word in zip(word_letter_occurences_list, words) if check(word_ch_occurences)]
     filtered_words = []
     for w in words:
         letters_copy = letters.copy()
@@ -58,3 +73,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
