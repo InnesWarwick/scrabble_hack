@@ -1,0 +1,7 @@
+main.py
+setup.py
+scrack.egg-info/PKG-INFO
+scrack.egg-info/SOURCES.txt
+scrack.egg-info/dependency_links.txt
+scrack.egg-info/entry_points.txt
+scrack.egg-info/top_level.txt

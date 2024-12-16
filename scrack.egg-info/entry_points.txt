@@ -1,0 +1,2 @@
+[console_scripts]
+scrack = main:main
