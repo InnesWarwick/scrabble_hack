@@ -22,18 +22,6 @@ def filter_words(hand: list[str])-> list[str]:
     word_letter_occurences_list  = [{ch: word.count(ch) for ch in word} for word in words]
     filtered_words = \
         [word for word_ch_occurences, word in zip(word_letter_occurences_list, words) if check(word_ch_occurences)]
-    filtered_words = []
-    for w in words:
-        letters_copy = letters.copy()
-        safe = []
-        for wl in w:
-            if wl in letters_copy:
-                letters_copy.remove(wl)
-                safe.append(True)
-            else:
-                safe.append(False)
-        if all(safe):
-            filtered_words.append(w)
     return filtered_words
 
 def find_best_word(words, max_length):
@@ -66,11 +54,8 @@ def main():
     gen_parser.add_argument("letters")
     gen_parser.add_argument("--length", type=int, default=255)
     gen_parser.set_defaults(func=solve)
-
     args = parser.parse_args()
-    if hasattr(args, 'func'):
-        print(args.func(args))
+    print(args.func(args))
 
 if __name__ == "__main__":
     main()
-

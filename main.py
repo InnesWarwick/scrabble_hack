@@ -54,10 +54,8 @@ def main():
     gen_parser.add_argument("letters")
     gen_parser.add_argument("--length", type=int, default=255)
     gen_parser.set_defaults(func=solve)
-
     args = parser.parse_args()
-    if hasattr(args, 'func'):
-        print(args.func(args))
+    print(args.func(args))
 
 if __name__ == "__main__":
     main()
