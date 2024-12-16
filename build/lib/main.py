@@ -5,8 +5,8 @@ def get_words():
     with open('dictionary.csv') as words:
         return [w.strip('\n') for w in words]
 
-def filter_words(hand: list[str], words: list[str]) -> list[str]:
-
+def filter_words(hand: list[str])-> list[str]:
+    words = get_words()
     hand_letter_occurences = {ch: hand.count(ch) for ch in hand}
     def check(word: dict[str,int]) -> bool:
         for word_ch, word_ch_count in word.items():
