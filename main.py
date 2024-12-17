@@ -5,10 +5,27 @@ def get_words():
     with open('dictionary.csv') as words:
         return [w.strip('\n') for w in words]
 
-def filter_words(hand: list[str])-> list[str]:
+def filter_words(hand: list[str]) -> list[str]:
+    """
+    Function to find the list of potential words from the input 
+    hand, represented by a list of strings for each character.
+
+    Arguments:
+        hand: a list of strings representing the tiles the user has
+
+    Returns:
+        A list of words
+    """
+
     words = get_words()
+
+    # Convert the input hand into a dictionary of characters 
+    # to integers, representing the count within the hand
     hand_letter_occurences = {ch: hand.count(ch) for ch in hand}
-    def check(word: dict[str,int]) -> bool:
+
+    # Defining a function to check if a word, represented by a dictionary of letter occurences
+    # is a valid word that can be played
+    def is_valid(word: dict[str,int]) -> bool:
         for word_ch, word_ch_count in word.items():
             if word_ch not in hand:
                 return False
@@ -19,9 +36,13 @@ def filter_words(hand: list[str])-> list[str]:
             
         return True
 
+    # Transform the list of words into a list of dictionaries of letter occurences for each word
     word_letter_occurences_list  = [{ch: word.count(ch) for ch in word} for word in words]
+
+    # Find the valid words by zipping the words represented by string and the words represented by dicts
+    # If the dictionary is found to be valid we add the string to the list
     filtered_words = \
-        [word for word_ch_occurences, word in zip(word_letter_occurences_list, words) if check(word_ch_occurences)]
+        [word for word_ch_occurences, word in zip(word_letter_occurences_list, words) if is_valid(word_ch_occurences)]
     return filtered_words
 
 def find_best_word(words, max_length):
