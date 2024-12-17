@@ -31,7 +31,7 @@ def filter_words(hand: list[str]) -> list[str]:
                 return False
             if hand_letter_occurences[word_ch] < word_ch_count:
                 return False
-            if hand_ch_count >= 2:
+            if word_ch_count >= 2:
                 return False
             
         return True
